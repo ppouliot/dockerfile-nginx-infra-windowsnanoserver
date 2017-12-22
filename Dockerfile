@@ -13,8 +13,7 @@ RUN \
     Expand-Archive -Path C:\node-v$ENV:NODEJS_VERSION-win-x64.zip -DestinationPath C:\ -Force; \
     Remove-Item -Path c:\node-v$ENV:NODEJS_VERSION-win-x64.zip -Confirm:$False; \
     Rename-Item -Path node-v$ENV:NODEJS_VERSION-win-x64.zip -NewName nodejs; \
-    Setx path \"%path%;C:\nodejs"; \
-    refreshenv;
+    Setx path \"%path%;C:\nodejs";
 
 RUN \
     # Install Python
