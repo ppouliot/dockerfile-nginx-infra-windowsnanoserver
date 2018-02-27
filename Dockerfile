@@ -1,11 +1,8 @@
-FROM microsoft/nanoserver:latest
-MAINTAINER Peter J. Pouliot <peter@pouliot.net>
-
-
+FROM microsoft/nanoserver
+LABEL maintainer="peter@pouliot.net"
 ENV NGINX_VERSION 1.13.8-dev
-ENV PYTHON_VERSION 3.6.4
-ENV NODEJS_VERSION 9.3.0
-
+ENV PYTHON_VERSION 3.7.0
+ENV NODEJS_VERSION 9.6.1
 SHELL ["powershell", "-command"]
 RUN \
     # Install NodeJS
@@ -14,7 +11,6 @@ RUN \
     Remove-Item -Path c:\node-v$ENV:NODEJS_VERSION-win-x64.zip -Confirm:$False; \
     Rename-Item -Path node-v$ENV:NODEJS_VERSION-win-x64 -NewName nodejs; \
     refreshenv;
-
 RUN \
     # Install Python
     Invoke-WebRequest -Uri https://www.python.org/ftp/python/$ENV:PYTHON_VERSION/python-$ENV:PYTHON_VERSION-embed-amd64.zip -OutFile c:\python-$ENV:PYTHON_VERSION-embed-amd64.zip; \
@@ -22,14 +18,12 @@ RUN \
     Remove-Item -Path c:\python-$ENV:PYTHON_VERSION-embed-amd64.zip -Confirm:$False; \
     Rename-Item -Path python-$ENV:PYTHON_VERSION-embed-amd64 -NewName Python; \
     refreshenv;
-
 RUN \
     # Install Nginx
     Invoke-WebRequest -Uri https://www.nginx.kr/nginx/win64/nginx-$ENV:NGINX_VERSION-win64.zip -OutFile c:\nginx-$ENV:NGINX_VERSION-win64.zip; \
     Expand-Archive -Path C:\nginx-$ENV:NGINX_VERSION-win64.zip -DestinationPath C:\ -Force; \
     Remove-Item -Path c:\nginx-$ENV:NGINX_VERSION-win64.zip -Confirm:$False; \
     Rename-Item -Path nginx-$ENV:NGINX_VERSION-win64 -NewName nginx;
-
 RUN \
     # Make sure that Docker always uses default DNS servers which hosted by Dockerd.exe
     Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters' -Name ServerPriorityTimeLimit -Value 0 -Type DWord; \
@@ -38,7 +32,6 @@ RUN \
     # Shorten DNS cache times
     Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters' -Name MaxCacheTtl -Value 30 -Type DWord; \
     Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters' -Name MaxNegativeCacheTtl -Value 30 -Type DWord
-
 WORKDIR /nginx
 EXPOSE 80
 CMD ["nginx", "-g", "\"daemon off;\""]
