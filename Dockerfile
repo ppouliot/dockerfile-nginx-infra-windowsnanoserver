@@ -1,7 +1,7 @@
 FROM microsoft/nanoserver
 LABEL maintainer="peter@pouliot.net"
 ENV NGINX_VERSION 1.13.8-dev
-ENV PYTHON_VERSION 3.6.4
+ENV PYTHON_VERSION 3.7.0
 ENV NODEJS_VERSION 9.6.1
 ENV WIN_ACME_VERSION 1.9.9.0
 
@@ -18,6 +18,7 @@ ADD https://www.python.org/ftp/python/$PYTHON_VERSION/python-$PYTHON_VERSION-emb
 ADD https://bootstrap.pypa.io/get-pip.py C:\get-pip.py
 RUN \
     Expand-Archive -Path C:\python-$ENV:PYTHON_VERSION-embed-amd64.zip -DestinationPath C:\ -Force; \
+	dir \
     Remove-Item -Path c:\python-$ENV:PYTHON_VERSION-embed-amd64.zip -Confirm:$False; \
     Rename-Item -Path python-$ENV:PYTHON_VERSION-embed-amd64 -NewName Python; \
     C:\python\python3.exe C:\get-pip.py \
@@ -26,8 +27,6 @@ RUN \
 # Install Nginx
 ADD https://www.nginx.kr/nginx/win64/nginx-$NGINX_VERSION-win64.zip c:\nginx-$NGINX_VERSION-win64.zip
 RUN \
-
-    # Invoke-WebRequest -Uri https://www.nginx.kr/nginx/win64/nginx-$ENV:NGINX_VERSION-win64.zip -OutFile c:\nginx-$ENV:NGINX_VERSION-win64.zip; \
     Expand-Archive -Path C:\nginx-$ENV:NGINX_VERSION-win64.zip -DestinationPath C:\ -Force; \
     Remove-Item -Path c:\nginx-$ENV:NGINX_VERSION-win64.zip -Confirm:$False; \
     Rename-Item -Path nginx-$ENV:NGINX_VERSION-win64 -NewName nginx;
@@ -43,9 +42,9 @@ RUN \
 # Let'sencrypt win-acme
 ADD https://github.com/PKISharp/win-acme/releases/download/v$WIN_ACME_VERSION/win-acme.v$WIN_ACME_VERSION.zip C:\win-acme.v$WIN_ACME_VERSION.zip
 RUN \
-    Expand-Archive -Path C:\win-acme.v$ENV:NGINX_VERSION.zip -DestinationPath C:\ -Force; \
-    Remove-Item -Path C:\win-acme.v$ENV:NGINX_VERSION.zip -Confirm:$False \
-    Rename-Item -Path C:\win-acme.v$ENV:NGINX_VERSION -NewName win-acme
+    Expand-Archive -Path C:\win-acme.v$ENV:WIN_ACME_VERSIONzip -DestinationPath C:\ -Force; \
+    Remove-Item -Path C:\win-acme.v$ENV:WIN_ACME_VERSION.zip -Confirm:$False \
+    Rename-Item -Path C:\win-acme.v$ENV:WIN_ACME_VERSION -NewName win-acme
 
 WORKDIR /nginx
 EXPOSE 80
