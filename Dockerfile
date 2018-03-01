@@ -3,6 +3,7 @@ LABEL maintainer="peter@pouliot.net"
 ENV NGINX_VERSION 1.13.8-dev
 ENV PYTHON_VERSION 3.7.0
 ENV NODEJS_VERSION 9.6.1
+EN WIN_ACME_VERSION 1.9.9.0
 SHELL ["powershell", "-command"]
 RUN \
     # Install NodeJS
@@ -32,6 +33,13 @@ RUN \
     # Shorten DNS cache times
     Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters' -Name MaxCacheTtl -Value 30 -Type DWord; \
     Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters' -Name MaxNegativeCacheTtl -Value 30 -Type DWord
+RUN \
+    # Let'sencrypt win-acme
+    Invoke-WebRequest -Uri https://github.com/PKISharp/win-acme/releases/download/v$ENV:WIN_ACME_VERSION/win-acme.v$ENV:WIN_ACME_VERSION.zip -OutFile win-acme.v$ENV:WIN_ACME_VERSION.zip \
+    Expand-Archive -Path C:\win-acme.v$ENV:NGINX_VERSION.zip -DestinationPath C:\ -Force; \
+    Remove-Item -Path C:\win-acme.v$ENV:NGINX_VERSION.zip -Confirm:$False \
+    Rename-Item -Path C:\win-acme.v$ENV:NGINX_VERSION -NewName win-acme
+
 WORKDIR /nginx
 EXPOSE 80
 CMD ["nginx", "-g", "\"daemon off;\""]
