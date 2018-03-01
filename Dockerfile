@@ -3,7 +3,7 @@ LABEL maintainer="peter@pouliot.net"
 ENV NGINX_VERSION 1.13.8-dev
 ENV PYTHON_VERSION 3.7.0
 ENV NODEJS_VERSION 9.6.1
-EN WIN_ACME_VERSION 1.9.9.0
+ENV WIN_ACME_VERSION 1.9.9.0
 SHELL ["powershell", "-command"]
 RUN \
     # Install NodeJS
