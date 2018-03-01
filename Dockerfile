@@ -2,7 +2,7 @@ FROM microsoft/nanoserver
 LABEL maintainer="peter@pouliot.net"
 ENV NGINX_VERSION 1.13.8-dev
 ENV PYTHON_VERSION 3.6.4
-ENV NODEJS_VERSION 9.6.1
+ENV NODEJS_VERSION 9.7.0
 ENV WIN_ACME_VERSION 1.9.9.0
 
 SHELL ["powershell", "-NoProfile", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue'; "]
