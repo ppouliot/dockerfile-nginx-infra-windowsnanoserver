@@ -2,7 +2,7 @@ FROM microsoft/nanoserver
 LABEL maintainer="peter@pouliot.net"
 ENV NGINX_VERSION 1.13.8-dev
 ENV PYTHON_VERSION 3.6.4
-ENV NODEJS_VERSION 9.7.0
+ENV NODEJS_VERSION 9.7.1
 ENV WIN_ACME_VERSION 1.9.9.0
 
 SHELL ["powershell", "-NoProfile", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue'; "]
@@ -19,8 +19,8 @@ ADD https://www.python.org/ftp/python/$PYTHON_VERSION/python-$PYTHON_VERSION-emb
 ADD https://bootstrap.pypa.io/get-pip.py C:\get-pip.py
 RUN \
     Expand-Archive -Path C:\python-$ENV:PYTHON_VERSION-embed-amd64.zip -DestinationPath C:\python -Force; #\
-#    Remove-Item -Path c:\python-$ENV:PYTHON_VERSION-embed-amd64.zip -Confirm:$False; \
-#    Rename-Item -Path python-$ENV:PYTHON_VERSION-embed-amd64 -NewName Python; \
+    Remove-Item -Path c:\python-$ENV:PYTHON_VERSION-embed-amd64.zip -Confirm:$False; \
+#   Rename-Item -Path python-$ENV:PYTHON_VERSION-embed-amd64 -NewName Python; \
 #    C:\python\python3.exe C:\get-pip.py \
 #	Remove-Item -Path c:\get-pip.py -Confirm:$False;
 
