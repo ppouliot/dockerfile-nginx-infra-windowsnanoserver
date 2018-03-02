@@ -18,7 +18,6 @@ ADD https://www.python.org/ftp/python/$PYTHON_VERSION/python-$PYTHON_VERSION-emb
 ADD https://bootstrap.pypa.io/get-pip.py C:\get-pip.py
 RUN \
     Expand-Archive -Path C:\python-$ENV:PYTHON_VERSION-embed-amd64.zip -DestinationPath C:\ -Force; \
-	dir \
     Remove-Item -Path c:\python-$ENV:PYTHON_VERSION-embed-amd64.zip -Confirm:$False; \
     Rename-Item -Path python-$ENV:PYTHON_VERSION-embed-amd64 -NewName Python; \
     C:\python\python3.exe C:\get-pip.py \
@@ -27,9 +26,9 @@ RUN \
 # Install Nginx
 ADD https://www.nginx.kr/nginx/win64/nginx-$NGINX_VERSION-win64.zip c:\nginx-$NGINX_VERSION-win64.zip
 RUN \
-    Expand-Archive -Path C:\nginx-$ENV:NGINX_VERSION-win64.zip -DestinationPath C:\ -Force; \
-    Remove-Item -Path c:\nginx-$ENV:NGINX_VERSION-win64.zip -Confirm:$False; \
-    Rename-Item -Path nginx-$ENV:NGINX_VERSION-win64 -NewName nginx;
+    Expand-Archive -Path C:\nginx-$ENV:NGINX_VERSION-win64.zip -DestinationPath C:\ -Force ; #\
+#    Remove-Item -Path c:\nginx-$ENV:NGINX_VERSION-win64.zip -Confirm:$False; \
+#    Rename-Item -Path nginx-$ENV:NGINX_VERSION-win64 -NewName nginx;
 RUN \
     # Make sure that Docker always uses default DNS servers which hosted by Dockerd.exe
     Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters' -Name ServerPriorityTimeLimit -Value 0 -Type DWord; \
