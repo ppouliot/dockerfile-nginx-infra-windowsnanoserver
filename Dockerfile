@@ -1,6 +1,6 @@
 FROM microsoft/nanoserver
 LABEL maintainer="peter@pouliot.net"
-ENV NGINX_VERSION 1.13.8-dev
+ENV NGINX_VERSION 1.13.10-dev
 ENV PYTHON_VERSION 3.6.4
 ENV NODEJS_VERSION 9.7.1
 ENV WIN_ACME_VERSION 1.9.9.0
