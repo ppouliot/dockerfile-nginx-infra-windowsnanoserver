@@ -28,9 +28,9 @@ RUN \
 
 ADD https://www.nginx.kr/nginx/win64/nginx-$NGINX_VERSION-win64.zip c:\\nginx-$NGINX_VERSION-win64.zip
 RUN \
-    Expand-Archive -Path C:\\nginx-$ENV:NGINX_VERSION-win64.zip -DestinationPath C:\\ -Force ; #\
-#    Remove-Item -Path c:\\nginx-$ENV:NGINX_VERSION-win64.zip -Confirm:$False; \
-#    Rename-Item -Path nginx-$ENV:NGINX_VERSION-win64 -NewName nginx;
+    Expand-Archive -Path C:\\nginx-$ENV:NGINX_VERSION-win64.zip -DestinationPath C:\\ -Force ; \
+    Remove-Item -Path c:\\nginx-$ENV:NGINX_VERSION-win64.zip -Confirm:$False; \
+    Rename-Item -Path C:\\nginx-$ENV:NGINX_VERSION-win64 -NewName nginx;
 
 RUN \
     # Make sure that Docker always uses default DNS servers which hosted by Dockerd.exe
