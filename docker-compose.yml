@@ -1,0 +1,29 @@
+version: '3'
+services:
+  nginx:
+    image: "${USERNAME}/nginx-windowsnanoserver:${VERSION}"
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+
+  letsencrypt:
+    image: "${USERNAME}/letsencrypt-windowsnanoserver:${VERSION}"
+    container_name: letsencrypt_win-acme
+    build:
+      context: .
+      dockerfile: letsencrypt/Dockerfile
+
+  python:
+    image: "${USERNAME}/python-windowsnanoserver:${VERSION}"
+    container_name: python
+    build:
+      context: .
+      dockerfile: python/Dockerfile
+
+  nodejs:
+    image: "${USERNAME}/nodejs-windowsnanoserver:${VERSION}"
+    container_name: nodejs
+    build:
+      context: .
+      dockerfile: nodejs/Dockerfile
