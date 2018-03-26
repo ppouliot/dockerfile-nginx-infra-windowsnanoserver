@@ -1,7 +1,7 @@
 FROM ppouliot/nginx-windowsnanoserver
 LABEL maintainer="peter@pouliot.net"
 ENV WIN_ACME_VERSION 1.9.9.0
-
+COPY Dockerfile /Dockerfile
 SHELL ["powershell", "-NoProfile", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue'; "]
 
 # Let'sencrypt win-acme
