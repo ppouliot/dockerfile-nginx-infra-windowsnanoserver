@@ -9,10 +9,10 @@ SHELL ["powershell", "-NoProfile", "-Command", "$ErrorActionPreference = 'Stop';
 # Install Python
 ADD https://www.python.org/ftp/python/$PYTHON_VERSION/python-$PYTHON_VERSION-embed-amd64.zip c:\\python-$PYTHON_VERSION-embed-amd64.zip
 RUN \
-    Expand-Archive -Path C:\\python-$ENV:PYTHON_VERSION-embed-amd64.zip -DestinationPath C:\\python -Force; \
+    Expand-Archive -Path C:\\python-$ENV:PYTHON_VERSION-embed-amd64.zip -DestinationPath C:\\Python -Force; \
     Setx path \"%path%;C:\Python;C:\Python\Scripts\"; \
     Remove-Item -Path c:\\python-$ENV:PYTHON_VERSION-embed-amd64.zip -Confirm:$False; \
-    c:\python\python.exe --version ;
+    c:\\Python\\python.exe --version ;
 
 # Install Pip
 ADD https://bootstrap.pypa.io/get-pip.py C:\\get-pip.py
@@ -25,7 +25,9 @@ RUN \
     $pipInstall = ('pip=={0}' -f $env:PYTHON_PIP_VERSION) ; \
     python getpip.py $pipInstall ; \
     Remove-Item get-pip.py ; \
-    Remove-Item getpip.py
+    Remove-Item getpip.py ; \
+    icacls C:\\Python\Lib\\site-packages\\pip /inheritance:e /t ; \
+	icacls C:\\Python\\Lib\\site-packages\\pip
 
 WORKDIR /python
 ENTRYPOINT C:/python/python.exe
