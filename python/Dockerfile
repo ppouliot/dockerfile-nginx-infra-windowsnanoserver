@@ -27,7 +27,7 @@ RUN \
     Remove-Item get-pip.py ; \
     Remove-Item getpip.py ; \
     icacls C:\\Python\Lib\\site-packages\\pip /inheritance:e /t ; \
-	icacls C:\\Python\\Lib\\site-packages\\pip
+	icacls C:\\Python\\Lib\\site-packages\\pip /reset /t
 
 WORKDIR /python
 ENTRYPOINT C:/python/python.exe
